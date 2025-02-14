@@ -6,7 +6,31 @@ Project URL: [roadmap.sh/projects/bastion-host](https://roadmap.sh/projects/bast
 This project implements a secure bastion host architecture in AWS, providing a secure way to access private infrastructure. The implementation includes VPC setup, security configurations, and SSH hardening measures.
 
 ## Architecture
-![Bastion Host Architecture](https://roadmap.sh/guides/bastion-host-diagram.png)
+
+```mermaid
+graph LR
+    Internet((Internet))
+    subgraph VPC [VPC 10.0.0.0/16]
+        subgraph Public [Public Subnet 10.0.1.0/24]
+            BH[Bastion Host\nt2.micro]
+        end
+        subgraph Private [Private Subnet 10.0.2.0/24]
+            PS[Private Server\nt2.micro]
+        end
+        IGW[Internet Gateway]
+    end
+    
+    Internet --> IGW
+    IGW --> BH
+    BH --> PS
+    
+    style VPC fill:#f5f5f5,stroke:#333,stroke-width:2px
+    style Public fill:#e1f5fe,stroke:#333,stroke-width:1px
+    style Private fill:#ffebee,stroke:#333,stroke-width:1px
+    style BH fill:#b3e5fc,stroke:#333,stroke-width:1px
+    style PS fill:#ffcdd2,stroke:#333,stroke-width:1px
+    style IGW fill:#e8f5e9,stroke:#333,stroke-width:1px
+```
 
 ### Components Created
 1. **VPC (10.0.0.0/16)**
